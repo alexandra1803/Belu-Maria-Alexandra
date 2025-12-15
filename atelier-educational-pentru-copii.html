@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Înscriere Voluntar - Atelier Educațional Copii</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #62c6e8;
+  --secondary: #fab8ce;
+  --bg: #fdf6f0;
+  --text: #333;
+  --card-bg: #ffffff;
+}
+
+body {
+  font-family: 'Roboto', Arial, sans-serif;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  scroll-behavior: smooth;
+}
+
+/* ================= GRID LAYOUT ================= */
+.grid-container {
+  display: grid;
+  grid-template-areas: 
+    "header header"
+    "nav main"
+    "nav aside"
+    "footer footer";
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: auto 1fr auto auto;
+  gap: 20px;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Header */
+header {
+  grid-area: header;
+  background: var(--secondary);
+  color: black;
+  padding: 30px 20px;
+  text-align: center;
+  border-radius: 15px;
+}
+header h1 { margin: 0; font-size: 2rem; font-weight: 700; }
+header a { color: black; text-decoration: none; font-weight: 500; margin-top: 10px; display: inline-block; }
+header a:hover { text-decoration: underline; }
+
+/* Nav */
+nav {
+  grid-area: nav;
+  background: #f9e2ec;
+  padding: 20px;
+  border-radius: 15px;
+}
+nav ul { list-style: none; padding: 0; }
+nav li { margin: 10px 0; }
+nav a { text-decoration: none; color: var(--text); font-weight: 500; }
+nav a:hover { color: var(--primary); }
+
+/* Main */
+main {
+  grid-area: main;
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 15px;
+}
+
+/* Aside */
+aside {
+  grid-area: aside;
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 15px;
+}
+
+/* Footer */
+footer {
+  grid-area: footer;
+  background: var(--secondary);
+  color: white;
+  text-align: center;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+/* ================= CARDURI FLEXBOX ================= */
+.activities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.activity-card {
+  background: var(--card-bg);
+  width: 32%;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  transition: transform 0.3s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+.activity-card:hover { transform: scale(1.03); }
+.activity-card img { width: 100%; height: 180px; object-fit: cover; }
+.activity-card h3 { margin: 10px; color: var(--primary); font-size: 1.2rem; }
+.activity-card p { margin: 0 10px 10px; font-size: 0.9rem; }
+
+/* ================= FORM ================= */
+form { display: grid; gap: 15px; margin-top: 20px; }
+label { font-weight: 500; }
+input, select, textarea {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  width: 100%;
+  font-size: 0.95rem;
+}
+textarea { resize: vertical; }
+
+button {
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: var(--primary);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+button:hover { background: #3aa9c3; }
+
+/* ================= MESSAGES ================= */
+.message { padding: 10px; border-radius: 10px; font-weight: 600; text-align: center; margin-top: 12px; }
+.msg-success { background: #e6fffa; color: #065f46; border: 1px solid #b2f5ea; }
+.msg-error { background: #fff1f2; color: #b91c1c; border: 1px solid #fecaca; }
+
+/* ================= LOCATION ================= */
+.location-info {
+  margin-top: 20px;
+  background: #fff3e6;
+  padding: 15px;
+  border-radius: 15px;
+}
+
+/* ================= BACK TO TOP ================= */
+#back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 1000;
+}
+#back-to-top:hover { background: #3aa9c3; }
+
+/* ================= RESPONSIVE ================= */
+@media screen and (max-width: 900px){
+  .grid-container {
+    grid-template-areas:
+      "header"
+      "nav"
+      "main"
+      "aside"
+      "footer";
+    grid-template-columns: 1fr;
+  }
+  .activities { flex-direction: column; }
+  .activity-card { width: 100%; }
+  header h1 { font-size: 1.5rem; }
+  button { font-size: 0.95rem; }
+}
+</style>
+</head>
+
+<body id="top">
+
+<div class="grid-container">
+
+  <header>
+    <h1>Înscriere Voluntar - Atelier Educațional Copii</h1>
+    <a href="pagina-principala.html">&larr; Înapoi la Pagina Principală</a>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#main">Ateliere</a></li>
+      <li><a href="#form-section">Înscriere Voluntar</a></li>
+      <li><a href="#location">Detalii Locație</a></li>
+    </ul>
+  </nav>
+
+  <main id="main">
+    <section>
+      <h2>Alege atelierul la care vrei să ajuți</h2>
+      <div class="activities">
+        
+        <div class="activity-card" data-atelier="Pictură">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTR4vlQYTRJFjmXUP3BRQyd4w4CaAwC3fQdUw&s">
+          <h3>Pictură</h3>
+          <p>Ajutăm copiii să își exprime creativitatea prin pictură.</p>
+        </div>
+
+        <div class="activity-card" data-atelier="Jocuri în aer liber">
+          <img src="https://www.copilul.ro/_files/articole/thumbs/ff/4d/activitati_in_aer_liber_copii_320w.png">
+          <h3>Jocuri în aer liber</h3>
+          <p>Coordonăm activități și jocuri distractive în aer liber.</p>
+        </div>
+
+        <div class="activity-card" data-atelier="Muzică și Dans">
+          <img src="https://dansmajorete.wordpress.com/wp-content/uploads/2015/09/collage-5.jpg">
+          <h3>Muzică și Dans</h3>
+          <p>Descoperim ritmul prin dans și cântece împreună cu copiii.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============= FORMULAR ============= -->
+    <section id="form-section">
+      <h2>Formular de înscriere</h2>
+
+      <form id="volunteer-form">
+
+        <label for="name">Nume complet</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="phone">Telefon</label>
+        <input type="text" id="phone" name="phone" required>
+
+        <label for="atelier">Atelier dorit</label>
+        <select id="atelier" name="atelier" required>
+          <option value="">-- Selectează atelierul --</option>
+          <option value="Pictură">Pictură</option>
+          <option value="Jocuri în aer liber">Jocuri în aer liber</option>
+          <option value="Muzică și Dans">Muzică și Dans</option>
+        </select>
+
+        <label for="skills">Competențe / Observații</label>
+        <textarea id="skills" name="skills" rows="4" placeholder="ex: experiență cu copii..."></textarea>
+
+        <button type="submit">Înscrie-te acum 🎨🕺⚽</button>
+
+        <div id="form-msg" aria-live="polite"></div>
+
+      </form>
+    </section>
+
+  </main>
+
+  <aside>
+    <div class="location-info" id="location">
+      <h3>Detalii locație</h3>
+      <p><strong>Adresă:</strong> Str. Exemplu, Nr. 10, București</p>
+      <p><strong>Program:</strong> Luni - Vineri: 09:00 - 18:00</p>
+      <p><strong>Sâmbătă:</strong> 10:00 - 14:00</p>
+      <p><strong>Contact:</strong> +40 123 456 789</p>
+    </div>
+  </aside>
+
+  <footer>
+    &copy; 2025 Platformă Voluntariat. Toate drepturile rezervate.
+  </footer>
+
+</div>
+
+<button id="back-to-top">⬆️</button>
+
+<!-- ================= JS ================= -->
+<script>
+const form = document.getElementById("volunteer-form");
+const msg  = document.getElementById("form-msg");
+
+// Select atelier când se apasă pe un card
+document.querySelectorAll('.activity-card').forEach(card=>{
+  card.addEventListener('click', ()=>{
+    document.getElementById('atelier').value = card.dataset.atelier;
+    card.scrollIntoView({behavior:"smooth", block:"center"});
+  });
+});
+
+// Trimitere date către PHP
+form.addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const data = new FormData(form);
+
+  fetch("inscriere_atelier_copii.php", { 
+      method: "POST",
+      body: data
+  })
+  .then(r => r.text())
+  .then(res => {
+      if(res.trim() === "success"){
+          showMsg("Înscriere reușită! Mulțumim pentru implicare 😊", "success");
+          form.reset();
+      } else {
+          showMsg(res, "error");
+      }
+  })
+  .catch(err => showMsg("Eroare server: " + err, "error"));
+});
+
+function showMsg(text, type){
+  msg.innerHTML = "";
+  const div = document.createElement("div");
+  div.className = "message " + (type === "success" ? "msg-success" : "msg-error");
+  div.textContent = text;
+  msg.appendChild(div);
+  setTimeout(()=>{ div.remove(); }, 5000);
+}
+
+// Back to top
+document.getElementById("back-to-top").addEventListener('click', ()=>{
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+</script>
+
+</body>
+</html>

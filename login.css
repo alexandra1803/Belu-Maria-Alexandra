@@ -1,0 +1,73 @@
+/* login.css */
+    :root{
+      --bg1: #f6fbff; 
+      --accent: #4cb9ef; 
+      --accent-2: #6bc9ff; 
+      --card: #ffffff; 
+      --muted: #6b7280; 
+      font-size: 16px; 
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: linear-gradient(135deg,var(--bg1), #e9fff4);
+      font-family: "Poppins", system-ui;
+      color:#111827;
+    }
+    .wrap{
+      width:100%;max-width:920px;margin:24px;
+      display:grid;grid-template-columns: 1fr 420px;
+      gap:28px;align-items:center;
+    }
+    .hero{
+      background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.25));
+      border-radius:22px;padding:34px;
+      box-shadow: 0 8px 30px rgba(15,23,42,0.07);
+      min-height:360px;display:flex;flex-direction:column;justify-content:center;gap:10px;
+    }
+    .hero h1{font-size:28px;margin-bottom:8px}
+    .hero p{color:var(--muted);line-height:1.4}
+
+    .card{
+      background:var(--card);border-radius:18px;padding:26px;
+      box-shadow:0 10px 30px rgba(2,6,23,0.06);
+    }
+
+    .tabs{display:flex;gap:8px;margin-bottom:18px;}
+    .tab{
+      flex:1;text-align:center;padding:8px 12px;border-radius:10px;
+      cursor:pointer;font-weight:600;color:var(--muted);
+    }
+    .tab.active{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;}
+
+    form{display:grid; gap:12px;}
+    label{font-size:14px;color:var(--muted);margin-bottom:6px;}
+    input{
+      width:100%;padding:12px 14px;border-radius:10px;
+      border:1px solid #e6eef6;font-size:15px;background:#fbfeff;
+    }
+    input:focus{
+      box-shadow:0 6px 18px rgba(106,180,255,0.18);
+      border-color:var(--accent-2)
+    }
+    .btn{
+      padding:12px 14px;border-radius:10px;border:none;cursor:pointer;
+      font-weight:700;background:var(--accent);color:white;
+    }
+    .show-pass{background:none;border:0;color:var(--accent);cursor:pointer;}
+
+    .msg{
+      padding:10px;border-radius:10px;font-size:14px;font-weight:600;margin-top:5px;
+      display:none;
+    }
+    .msg-error{background:#ffe5e5;color:#b30000;border:1px solid #ffb3b3;}
+    .msg-success{background:#e6ffed;color:#0f6d2c;border:1px solid #b2f2c2;}
+
+    @media (max-width:900px){
+      .wrap{grid-template-columns:1fr; max-width:520px}
+    }
+ 

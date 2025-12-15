@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login / Înregistrare — Voluntariat</title>
+
+<link rel="stylesheet" href="login.css">
+
+</head>
+
+<body>
+
+<main class="wrap">
+
+  <section class="hero">
+    <h1>Platformă Voluntariat</h1>
+    <p>Gestionează activități și înscrieri. Autentifică-te sau creează un cont.</p>
+  </section>
+
+  <aside class="card">
+
+    <div class="tabs">
+      <div class="tab active" id="tab-login">Login</div>
+      <div class="tab" id="tab-register">Înregistrare</div>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="panel-login">
+      <form id="login-form">
+        <div>
+          <label for="login-email">Email</label>
+          <input id="login-email" name="email" type="email" required>
+        </div>
+        <div>
+          <label for="login-pass">Parolă</label>
+          <div style="display:flex;align-items:center;gap:8px">
+            <input id="login-pass" name="password" type="password" required>
+            <button type="button" class="show-pass" id="toggle-login-pass">Arată</button>
+          </div>
+        </div>
+        <button class="btn" type="submit">Conectează-te</button>
+        <div id="login-msg" class="msg"></div>
+      </form>
+    </div>
+
+    <!-- REGISTER -->
+    <div id="panel-register" hidden>
+      <form id="register-form">
+        <div>
+          <label for="reg-email">Email</label>
+          <input id="reg-email" name="email" type="email" required>
+        </div>
+        <div>
+          <label for="reg-pass">Parolă</label>
+          <div style="display:flex;align-items:center;gap:8px">
+            <input id="reg-pass" name="password" type="password" required>
+            <button type="button" class="show-pass" id="toggle-reg-pass">Arată</button>
+          </div>
+        </div>
+        <button class="btn" type="submit">Înregistrează-te</button>
+        <div id="reg-msg" class="msg"></div>
+      </form>
+    </div>
+
+  </aside>
+</main>
+
+<script>
+// -------------------- TAB SWITCH --------------------
+const tabLogin = document.getElementById("tab-login");
+const tabReg = document.getElementById("tab-register");
+const loginPanel = document.getElementById("panel-login");
+const registerPanel = document.getElementById("panel-register");
+
+tabLogin.onclick = () => {
+  tabLogin.classList.add("active");
+  tabReg.classList.remove("active");
+  loginPanel.hidden = false;
+  registerPanel.hidden = true;
+};
+tabReg.onclick = () => {
+  tabReg.classList.add("active");
+  tabLogin.classList.remove("active");
+  registerPanel.hidden = false;
+  loginPanel.hidden = true;
+};
+
+// -------------------- PASSWORD VISIBILITY --------------------
+function togglePass(btnId, inputId){
+  document.getElementById(btnId).onclick = () => {
+    const inp = document.getElementById(inputId);
+    inp.type = inp.type === "password" ? "text" : "password";
+  };
+}
+togglePass("toggle-login-pass","login-pass");
+togglePass("toggle-reg-pass","reg-pass");
+
+// -------------------- REGISTER --------------------
+const regForm = document.getElementById("register-form");
+const regMsg = document.getElementById("reg-msg");
+
+regForm.addEventListener("submit", e=>{
+  e.preventDefault();
+  regMsg.style.display = "none";
+
+  if(document.getElementById("reg-pass").value.length < 6){
+      regMsg.className = "msg msg-error";
+      regMsg.textContent = "Parola trebuie să aibă minim 6 caractere!";
+      regMsg.style.display = "block";
+      return;
+  }
+
+  fetch("register.php", {
+    method:"POST",
+    body:new FormData(regForm)
+  })
+  .then(r=>r.text())
+  .then(msg=>{
+    if(msg.includes("succes")){
+      regMsg.className = "msg msg-success";
+      regMsg.textContent = msg;
+      regMsg.style.display = "block";
+      regForm.reset();
+      setTimeout(()=> tabLogin.click(), 1200);
+    } else {
+      regMsg.className = "msg msg-error";
+      regMsg.textContent = msg;
+      regMsg.style.display = "block";
+    }
+  });
+});
+
+// -------------------- LOGIN — cu role în localStorage --------------------
+const loginForm = document.getElementById("login-form");
+const loginMsg = document.getElementById("login-msg");
+
+loginForm.addEventListener("submit", e=>{
+  e.preventDefault();
+  loginMsg.style.display = "none";
+
+  fetch("login.php", {
+    method:"POST",
+    body:new FormData(loginForm)
+  })
+  .then(r=>r.text())
+  .then(msg=>{
+    msg = msg.trim();
+
+    if(msg === "admin"){
+      loginMsg.className = "msg msg-success";
+      loginMsg.textContent = "Autentificare reușită! Redirecționare...";
+      loginMsg.style.display = "block";
+
+      // Salvăm rolul în localStorage
+      localStorage.setItem("current_user", JSON.stringify({
+          email: loginForm.email.value,
+          role: "admin"
+      }));
+
+      setTimeout(()=> window.location.href = "pagina-principala.html", 900);
+    }
+    else if(msg === "user"){
+      loginMsg.className = "msg msg-success";
+      loginMsg.textContent = "Autentificare reușită! Redirecționare...";
+      loginMsg.style.display = "block";
+
+      // Salvăm rolul în localStorage
+      localStorage.setItem("current_user", JSON.stringify({
+          email: loginForm.email.value,
+          role: "user"
+      }));
+
+      setTimeout(()=> window.location.href = "pagina-principala.html", 900);
+    }
+    else {
+      loginMsg.className = "msg msg-error";
+      loginMsg.textContent = msg;
+      loginMsg.style.display = "block";
+    }
+  });
+});
+</script>
+
+</body>
+</html>

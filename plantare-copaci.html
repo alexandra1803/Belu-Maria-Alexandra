@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Înscriere Voluntar - Plantare Copaci</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #2e7d32;
+  --secondary: #00b894;
+  --bg: #f3f7f2;
+  --text: #333;
+  --card-bg: #ffffff;
+}
+
+body {
+  font-family: 'Roboto', Arial, sans-serif;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  scroll-behavior: smooth;
+}
+
+/* ========== GRID LAYOUT ========== */
+.grid-container {
+  display: grid;
+  grid-template-areas: 
+    "header header"
+    "nav main"
+    "nav aside"
+    "footer footer";
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: auto 1fr auto auto;
+  gap: 20px;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Header */
+header {
+  grid-area: header;
+  background: var(--primary);
+  color: white;
+  padding: 30px 20px;
+  text-align: center;
+  border-radius: 15px;
+}
+header h1 { margin: 0; font-size: 2rem; font-weight: 700; }
+header a { color: white; text-decoration: none; font-weight: 500; margin-top: 10px; display: inline-block; }
+header a:hover { text-decoration: underline; }
+
+/* Nav */
+nav {
+  grid-area: nav;
+  background: #f0f4f3;
+  padding: 20px;
+  border-radius: 15px;
+}
+nav ul { list-style: none; padding: 0; }
+nav li { margin: 10px 0; }
+nav a { text-decoration: none; color: var(--text); font-weight: 500; }
+nav a:hover { color: var(--primary); }
+
+/* Main */
+main {
+  grid-area: main;
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 15px;
+}
+
+/* Aside */
+aside {
+  grid-area: aside;
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 15px;
+}
+
+/* Footer */
+footer {
+  grid-area: footer;
+  background: var(--primary);
+  color: white;
+  text-align: center;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+/* Form */
+form { display: grid; gap: 15px; margin-top: 20px; }
+label { font-weight: 500; }
+input, select, textarea {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  width: 100%;
+  font-size: 0.95rem;
+}
+textarea { resize: vertical; }
+
+button {
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: var(--primary);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+button:hover { background: #256629; }
+
+/* Messages */
+.message { padding: 10px; border-radius: 10px; font-weight: 600; text-align: center; margin-top: 12px; }
+.msg-success { background: #e6fffa; color: #065f46; border: 1px solid #b2f5ea; }
+.msg-error { background: #fff1f2; color: #b91c1c; border: 1px solid #fecaca; }
+
+/* Image */
+.main-image {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 15px;
+  border: 4px solid var(--primary);
+  display: block;
+  margin: 20px auto;
+}
+
+/* Location info */
+.location-info {
+  background: #e2f5e3;
+  padding: 15px;
+  border-radius: 15px;
+}
+
+/* Back to top */
+#back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 1000;
+}
+#back-to-top:hover { background: #256629; }
+
+/* Responsive */
+@media screen and (max-width: 900px){
+  .grid-container {
+    grid-template-areas:
+      "header"
+      "nav"
+      "main"
+      "aside"
+      "footer";
+    grid-template-columns: 1fr;
+  }
+  header h1 { font-size: 1.5rem; }
+  button { font-size: 0.95rem; }
+}
+</style>
+</head>
+<body id="top">
+
+<div class="grid-container">
+
+  <header>
+    <h1>Înscriere Voluntar - Plantare Copaci</h1>
+    <a href="pagina-principala.html">&larr; Înapoi la Pagina Principală</a>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#main">Despre activitate</a></li>
+      <li><a href="#form-section">Înscriere Voluntar</a></li>
+      <li><a href="#location">Detalii Locație</a></li>
+    </ul>
+  </nav>
+
+  <main id="main">
+    <p class="activity-desc">
+      Contribuie la un oraș mai verde plantând copaci! 🌳  
+      Activitatea ajută la creșterea suprafețelor verzi, îmbunătățește calitatea aerului și oferă un mediu sănătos generațiilor viitoare.  
+      Fii parte din <span style="color: var(--primary); font-weight:700;">echipa noastră de voluntari</span> și pune rădăcini pentru un viitor mai verde!
+    </p>
+
+    <img src="https://vego.holdings/wp-content/uploads/2021/02/pomi-plantati.jpg" alt="Plantare copaci" class="main-image">
+
+    <section id="form-section">
+      <form id="volunteer-form">
+        <label for="name">Nume complet</label>
+        <input type="text" id="name" name="name" placeholder="ex: Ioana Georgescu" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="ex: ioana@exemplu.com" required>
+
+
+        <label for="phone">Telefon</label>
+        <input type="text" id="phone" name="phone" placeholder="ex: 07xxxxxxxx" required>
+
+
+        <label for="day">Zi disponibilă</label>
+        <select id="day" name="day" required>
+          <option value="">-- Selectează ziua --</option>
+          <option value="Sâmbătă">Sâmbătă</option>
+          <option value="Duminică">Duminică</option>
+        </select>
+
+        <label for="skills">Observații</label>
+        <textarea id="skills" name="skills" rows="4" placeholder="ex: experiență în grădinărit, disponibilitate extra, etc."></textarea>
+
+        <button type="submit">Înscrie-te acum 🌳</button>
+        <div id="form-msg" aria-live="polite"></div>
+      </form>
+    </section>
+  </main>
+
+  <aside id="aside">
+    <div class="location-info" id="location">
+      <h3>Detalii locație</h3>
+      <p><strong>Adresă:</strong> Parcul Natural Văcărești & Zona Lacul Morii, București</p>
+      <p><strong>Program:</strong> 09:00 – 13:00, Sâmbătă și Duminică</p>
+      <p><strong>Echipament oferit:</strong> mănuși, lopeți, puieți și saci biodegradabili</p>
+    </div>
+  </aside>
+
+  <footer>
+    &copy; 2025 Platformă Voluntariat. Toate drepturile rezervate.
+  </footer>
+
+</div>
+
+<button id="back-to-top" title="Mergi sus">⬆️</button>
+
+<script>
+const form = document.getElementById("volunteer-form");
+const msg = document.getElementById("form-msg");
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  fetch("inscriere_plantare_copaci.php", {
+    method: "POST",
+    body: new FormData(form)
+  })
+  .then(r => r.text())
+  .then(resp => {
+    if(resp.trim() === "success"){
+      showMsg("Înscriere reușită! Mulțumim pentru implicare 🌳", "success");
+      form.reset();
+    } else {
+      showMsg(resp, "error");
+    }
+  });
+});
+
+function showMsg(text, type){
+  msg.innerHTML = "";
+  const div = document.createElement("div");
+  div.className = "message " + (type === "success" ? "msg-success" : "msg-error");
+  div.textContent = text;
+  msg.appendChild(div);
+}
+// Back to top
+document.getElementById("back-to-top").addEventListener('click', ()=>{
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+</script>
+
+
+</body>
+</html>

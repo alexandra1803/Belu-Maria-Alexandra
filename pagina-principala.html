@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Platformă Voluntariat</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="pagina_principala.css">
+</head>
+<body>
+
+<div class="grid-container">
+
+  <header>
+    <h1>Platformă Voluntariat</h1>
+    <button id="logout-btn">Delogare</button>
+  </header>
+
+  <aside>
+    <button onclick="document.getElementById('about-section').scrollIntoView({behavior:'smooth'})">Despre Platformă</button>
+    <button onclick="document.getElementById('contact-section').scrollIntoView({behavior:'smooth'})">Contact</button>
+
+    <div class="location-info" id="about-section">
+      <h3>Despre Platformă</h3>
+      <p>
+        Platforma noastră de voluntariat conectează persoanele dornice să ajute cu activități comunitare relevante.  
+        Ne concentrăm pe transparență, siguranță și comunicare eficientă, pentru ca fiecare voluntar să știe cum poate contribui și ce impact are.  
+        Oferim experiențe variate: educație, mediu, sprijin social și protecția animalelor, creând o comunitate responsabilă și activă.
+      </p>
+    </div>
+
+    <div class="location-info" id="contact-section">
+      <h3>Contact și Program</h3>
+      <p>Email: contact@voluntariat.ro</p>
+      <p>Telefon: +40 123 456 789</p>
+      <p>Adresă: Str. Exemplu, Nr. 10, București</p>
+      <p>Luni - Vineri: 09:00 - 18:00</p>
+      <p>Sâmbătă: 10:00 - 14:00</p>
+      <p>Duminică: Închis</p>
+    </div>
+
+    <!-- Buton admin pentru a reafișa activități ascunse -->
+    <button id="show-hidden-btn" style="display:none;">Afișează activități ascunse</button>
+
+  </aside>
+
+  <main>
+    <section class="activities" id="activities-container">
+      <!-- Cardurile vor fi generate din JS -->
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Platformă Voluntariat. Toate drepturile rezervate.
+  </footer>
+
+</div>
+
+<button id="back-to-top" title="Mergi sus">⬆️</button>
+
+<script>
+// Lista activităților
+const activities = [
+  {name: "Atelier educațional pentru copii", description: "O activitate interactivă unde voluntarii ajută copiii să învețe prin joc și distracție.", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPWwzOo2fEV4EUPvmxNZKzR_ggOo_LOkLzew&s", form:"atelier-educational-pentru-copii.html"},
+  {name: "Colectă de haine", description: "Strângem haine pentru persoanele nevoiașe. Poți dona și organiza donațiile.", img:"https://cdn.knd.ro/media/521/2861/1752/20435192/1/donatii-haine-2.jpg?width=300&height=168", form:"colecta-de-haine.html"},
+  {name: "Curățenie în oraș", description: "Voluntari implicați în menținerea curățeniei în parcuri și zone publice.", img:"https://ecolectbihor.ro/wp-content/uploads/2023/04/campanie-curateniei.png", form:"curatenie-parc.html"},
+  {name: "Plantare copaci", description: "Ajutăm la plantarea de copaci și întreținerea spațiilor verzi.", img:"https://micul-meserias.ro/image/catalog/Poze%20Arpad%202024/Plantare%20pomi.png", form:"plantare-copaci.html"},
+  {name: "Adăpost animale", description: "Oferim sprijin în adăposturi de animale: hrănire, curățenie și socializare.", img:"https://static.wixstatic.com/media/157efe_e120bf1209cf499286ef4371806aa849~mv2.jpg/v1/fill/w_640,h_524,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/157efe_e120bf1209cf499286ef4371806aa849~mv2.jpg", form:"voluntariat-la-adapost-animale.html"}
+];
+
+const container = document.getElementById("activities-container");
+const currentUser = JSON.parse(localStorage.getItem("current_user") || "{}");
+const isAdmin = currentUser.role === "admin";
+
+
+// Starea activităților
+let activitiesVisibility = JSON.parse(localStorage.getItem("activities_visibility") || "{}");
+
+// Render carduri
+function renderActivities() {
+  container.innerHTML = "";
+  let hiddenExists = false;
+
+  activities.forEach(activity => {
+    const visible = activitiesVisibility[activity.name] ?? true;
+    if(!visible){
+      hiddenExists = true;
+      if(!isAdmin) return; // utilizatori normali nu văd activitățile ascunse
+    }
+
+    const card = document.createElement("div");
+    card.className = "activity-card";
+
+    const img = document.createElement("img");
+    img.src = activity.img;
+    img.alt = activity.name;
+
+    const content = document.createElement("div");
+    content.className = "activity-card-content";
+
+    const h3 = document.createElement("h3");
+    h3.textContent = activity.name;
+
+    const p = document.createElement("p");
+    p.textContent = activity.description;
+
+    const btn = document.createElement("button");
+    btn.textContent = "Înscrie-te";
+    btn.addEventListener("click",()=>{ window.location.href = activity.form; });
+
+    content.appendChild(h3);
+    content.appendChild(p);
+    card.appendChild(img);
+    card.appendChild(content);
+    card.appendChild(btn);
+
+    if(isAdmin){
+      const adminBtn = document.createElement("button");
+      adminBtn.className = "admin-btn";
+      adminBtn.textContent = visible ? "Ascunde" : "Reafișează";
+      adminBtn.addEventListener("click", ()=>{
+        activitiesVisibility[activity.name] = !visible;
+        localStorage.setItem("activities_visibility", JSON.stringify(activitiesVisibility));
+        renderActivities();
+      });
+      card.appendChild(adminBtn);
+    }
+
+    container.appendChild(card);
+  });
+
+  // Arată butonul global de afișare activități ascunse
+  document.getElementById("show-hidden-btn").style.display = (isAdmin && hiddenExists) ? "block" : "none";
+}
+
+// Delogare
+document.getElementById("logout-btn").addEventListener("click", ()=>{
+  localStorage.removeItem("current_user");
+  window.location.href = "pagina-login.html";
+});
+
+// Buton global admin pentru reafișarea tuturor activităților ascunse
+document.getElementById("show-hidden-btn").addEventListener("click", ()=>{
+  Object.keys(activitiesVisibility).forEach(key => { activitiesVisibility[key] = true; });
+  localStorage.setItem("activities_visibility", JSON.stringify(activitiesVisibility));
+  renderActivities();
+});
+
+renderActivities();
+
+// Back to top
+document.getElementById("back-to-top").addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+</script>
+
+</body>
+</html>
